@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@theme {
+  --color-forest: #123E35;
+  --color-forest-dark: #0B2820;
+  --color-forest-light: #1A5548;
+  --color-emerald-th: #21865D;
+  --color-emerald-light: #2BA374;
+  --color-mint: #E8F4ED;
+  --color-mint-dark: #D4EBDD;
+  --color-cream: #FAFCFA;
+  --color-ink: #26332D;
+  --color-ink-light: #4A5B52;
+  --color-sage: #F2F5F3;
+  --color-gold: #C9A961;
+  --color-coral: #E07856;
+  --color-sky: #5B9BD5;
+
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Fraunces', Georgia, serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-forest text-white font-medium rounded-full hover:bg-forest-light transition-all duration-200 shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-forest border-2 border-forest font-medium rounded-full hover:bg-mint transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-accent {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-emerald-th text-white font-medium rounded-full hover:bg-emerald-light transition-all duration-200 shadow-sm;
+  }
+
+  .card {
+    @apply bg-white rounded-2xl border border-sage shadow-sm hover:shadow-md transition-shadow duration-200;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-3 bg-white border border-sage rounded-xl text-ink placeholder:text-ink-light/50 focus:outline-none focus:ring-2 focus:ring-emerald-th/30 focus:border-emerald-th transition-all;
+  }
+
+  .label {
+    @apply block text-sm font-medium text-ink mb-1.5;
+  }
+
+  .badge-verified {
+    @apply inline-flex items-center gap-1 px-2.5 py-0.5 bg-mint text-forest text-xs font-medium rounded-full border border-emerald-th/20;
+  }
+
+  .badge-pending {
+    @apply inline-flex items-center gap-1 px-2.5 py-0.5 bg-amber-50 text-amber-800 text-xs font-medium rounded-full border border-amber-200;
+  }
+
+  .badge-urgent {
+    @apply inline-flex items-center gap-1 px-2.5 py-0.5 bg-red-50 text-red-700 text-xs font-medium rounded-full border border-red-200;
+  }
+}
