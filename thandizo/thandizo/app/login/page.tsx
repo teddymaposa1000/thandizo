@@ -27,16 +27,21 @@ export default function LoginPage() {
       })
 
       // Redirect based on role
+// Redirect based on role - use window.location for reliable redirect
 if (userData?.role === 'ADMIN' || userData?.role === 'SUPER_ADMIN') {
+  console.log('Admin detected, redirecting to admin dashboard...')
   window.location.href = '/dashboard/admin'
   return
 } else if (userData?.role === 'PATIENT') {
+  console.log('Patient detected, redirecting to patient dashboard...')
   window.location.href = '/dashboard/patient'
   return
 } else if (userData?.role === 'DONOR') {
+  console.log('Donor detected, redirecting to donor dashboard...')
   window.location.href = '/dashboard/donor'
   return
 } else {
+  console.log('Default user, redirecting to dashboard...')
   window.location.href = '/dashboard'
   return
 }
