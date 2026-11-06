@@ -31,35 +31,64 @@ export default function AdminDashboard() {
     checkAdmin()
   }, [])
 
-  const checkAdmin = async () => {
-    try {
-      const { data: { user } } = await supabase.auth.getUser()
-      
-      if (!user) {
-        router.push('/login')
-        return
-      }
-
-      const { data: profile } = await supabase
-        .from('users')
-        .select('role, full_name')
-        .eq('id', user.id)
-        .single()
-
-      if (!profile || (profile.role !== 'ADMIN' && profile.role !== 'SUPER_ADMIN')) {
-        router.push('/dashboard')
-        return
-      }
-
-      setUser({ ...user, ...profile })
-      await fetchStats()
-    } catch (error) {
-      console.error('Error:', error)
+const checkAdmin = async () => {
+  try {
+    console.log('🔍 Checking admin access...')
+    
+    const { data: { user }, error: authError } = await supabase.auth.getUser()
+    
+    if (authError) {
+      console.error('❌ Auth error:', authError)
       router.push('/login')
-    } finally {
-      setLoading(false)
+      return
     }
+    
+    if (!user) {
+      console.log('❌ No user found, redirecting to login')
+      router.push('/login')
+      return
+    }
+
+    console.log('✅ User found:', user.email, 'ID:', user.id)
+
+    const { data: profile, error: profileError } = await supabase
+      .from('users')
+      .select('role, full_name')
+      .eq('id', user.id)
+      .single()
+
+    if (profileError) {
+      console.error('❌ Profile error:', profileError)
+      console.log('❌ Redirecting to dashboard due to profile error')
+      router.push('/dashboard')
+      return
+    }
+
+    if (!profile) {
+      console.log('❌ No profile found for user')
+      router.push('/dashboard')
+      return
+    }
+
+    console.log('✅ Profile found:', profile)
+    console.log('User role:', profile.role)
+
+    if (profile.role !== 'ADMIN' && profile.role !== 'SUPER_ADMIN') {
+      console.log('❌ User is not admin, redirecting to dashboard')
+      router.push('/dashboard')
+      return
+    }
+
+    console.log('✅ Admin access granted!')
+    setUser({ ...user, ...profile })
+    await fetchStats()
+  } catch (error) {
+    console.error('❌ Unexpected error in checkAdmin:', error)
+    router.push('/login')
+  } finally {
+    setLoading(false)
   }
+}
 
   const fetchStats = async () => {
     try {
