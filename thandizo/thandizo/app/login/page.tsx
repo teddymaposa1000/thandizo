@@ -26,24 +26,20 @@ export default function LoginPage() {
         password,
       })
 
-      if (error) throw error
-
-      // Get user role from our users table
-      const { data: userData } = await supabase
-        .from('users')
-        .select('role')
-        .eq('id', data.user.id)
-        .single()
-
       // Redirect based on role
-      if (userData?.role === 'ADMIN' || userData?.role === 'SUPER_ADMIN') {
-        router.push('/dashboard/admin')
-      } else if (userData?.role === 'PATIENT') {
-        router.push('/dashboard/patient')
-      } else if (userData?.role === 'DONOR') {
-        router.push('/dashboard/donor')
-      } else {
-        router.push('/dashboard')
+if (userData?.role === 'ADMIN' || userData?.role === 'SUPER_ADMIN') {
+  window.location.href = '/dashboard/admin'
+  return
+} else if (userData?.role === 'PATIENT') {
+  window.location.href = '/dashboard/patient'
+  return
+} else if (userData?.role === 'DONOR') {
+  window.location.href = '/dashboard/donor'
+  return
+} else {
+  window.location.href = '/dashboard'
+  return
+}
       }
     } catch (err: any) {
       setError(err.message || 'Failed to sign in. Please check your credentials.')
