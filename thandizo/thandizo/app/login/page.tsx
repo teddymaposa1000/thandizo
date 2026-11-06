@@ -27,8 +27,7 @@ export default function LoginPage() {
       })
 
       if (error) throw error
-
-      // Get user role from our users table
+            // Get user role from our users table
       const { data: userData } = await supabase
         .from('users')
         .select('role')
@@ -59,11 +58,9 @@ export default function LoginPage() {
       setLoading(false)
     }
   }
-
-  return (
+    return (
     <div className="min-h-screen bg-gradient-to-br from-forest-50 via-mint/20 to-cream flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md">
-        {/* Logo */}
         <div className="text-center mb-8">
           <Link href="/" className="inline-block">
             <div className="w-16 h-16 bg-gradient-to-br from-emerald-th to-forest rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
@@ -74,7 +71,6 @@ export default function LoginPage() {
           </Link>
         </div>
 
-        {/* Login Form */}
         <div className="card p-8">
           <h2 className="font-display text-2xl font-bold text-forest mb-2">Welcome Back</h2>
           <p className="text-ink-light mb-6">Sign in to your account</p>
@@ -149,7 +145,6 @@ export default function LoginPage() {
           </div>
         </div>
 
-        {/* Demo Credentials */}
         <div className="mt-6 card p-6 bg-mint/30">
           <h3 className="font-medium text-forest mb-3">Demo Credentials</h3>
           <div className="space-y-2 text-sm">
