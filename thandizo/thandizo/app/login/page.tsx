@@ -26,25 +26,32 @@ export default function LoginPage() {
         password,
       })
 
+      if (error) throw error
+
+      // Get user role from our users table
+      const { data: userData } = await supabase
+        .from('users')
+        .select('role')
+        .eq('id', data.user.id)
+        .single()
+
       // Redirect based on role
-// Redirect based on role - use window.location for reliable redirect
-if (userData?.role === 'ADMIN' || userData?.role === 'SUPER_ADMIN') {
-  console.log('Admin detected, redirecting to admin dashboard...')
-  window.location.href = '/dashboard/admin'
-  return
-} else if (userData?.role === 'PATIENT') {
-  console.log('Patient detected, redirecting to patient dashboard...')
-  window.location.href = '/dashboard/patient'
-  return
-} else if (userData?.role === 'DONOR') {
-  console.log('Donor detected, redirecting to donor dashboard...')
-  window.location.href = '/dashboard/donor'
-  return
-} else {
-  console.log('Default user, redirecting to dashboard...')
-  window.location.href = '/dashboard'
-  return
-}
+      if (userData?.role === 'ADMIN' || userData?.role === 'SUPER_ADMIN') {
+        console.log('Admin detected, redirecting to admin dashboard...')
+        window.location.href = '/dashboard/admin'
+        return
+      } else if (userData?.role === 'PATIENT') {
+        console.log('Patient detected, redirecting to patient dashboard...')
+        window.location.href = '/dashboard/patient'
+        return
+      } else if (userData?.role === 'DONOR') {
+        console.log('Donor detected, redirecting to donor dashboard...')
+        window.location.href = '/dashboard/donor'
+        return
+      } else {
+        console.log('Default user, redirecting to dashboard...')
+        window.location.href = '/dashboard'
+        return
       }
     } catch (err: any) {
       setError(err.message || 'Failed to sign in. Please check your credentials.')
@@ -148,11 +155,11 @@ if (userData?.role === 'ADMIN' || userData?.role === 'SUPER_ADMIN') {
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
               <span className="text-ink-light">Admin:</span>
-              <span className="font-mono text-forest">admin@thandizo.org</span>
+              <span className="font-mono text-forest">lilyoung1703@gmail.com</span>
             </div>
             <div className="flex justify-between">
               <span className="text-ink-light">Password:</span>
-              <span className="font-mono text-forest">AdminPass123!</span>
+              <span className="font-mono text-forest">(your password)</span>
             </div>
           </div>
           <p className="text-xs text-ink-light mt-3 italic">
